@@ -1,10 +1,23 @@
-/* Requires the Docker Pipeline plugin */
 pipeline {
-    agent { docker { image 'python:3.13.5-alpine3.22' } }
+    agent any
     stages {
-        stage('build') {
+        stage('Staging') {
             steps {
-                sh 'python --version'
+                echo 'Running staging environment build...'
+                // Put test or dummy deploy logic here
+            }
+        }
+
+        stage('Approval') {
+            steps {
+                input message: 'Approve to proceed to Production?'
+            }
+        }
+
+        stage('Production Build') {
+            steps {
+                echo 'Running production build...'
+                // Put final build/deploy commands here
             }
         }
     }
